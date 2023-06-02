@@ -1,12 +1,9 @@
 package projeto.integrado.rhuan.social;
 
-import java.util.List;
-
+import java.util.Date;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,11 +16,17 @@ public class Tweet {
     @Id
     private ObjectId id;
 
-    @DocumentReference
-    private User userId;
-    
+    private String userId;
+
     private String releaseDate;
     private String mensagem;
-    private List<String> imagens;
+    private String[] imagens;
+
+    public Tweet(String userId, String mensagem, String[] imagens) {
+        this.releaseDate = (new Date().toString());
+        this.userId = userId;
+        this.mensagem = mensagem;
+        this.imagens = imagens;
+    }
 
 }

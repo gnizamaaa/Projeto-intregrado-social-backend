@@ -27,4 +27,8 @@ public class TweetService {
     public Optional<List<Tweet>> userIdTweets(String id) {
         return tweetRepository.findTweetByUserId(id);
     }
+
+    public Tweet createTweet(String user, String mensagem, String[] imagens) {
+        return tweetRepository.insert(new Tweet(user, mensagem, imagens));
+    }
 }
