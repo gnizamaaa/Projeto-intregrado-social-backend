@@ -19,8 +19,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User createUser(String nome, Date birthday, String bio) {
-        User saida = userRepository.insert(new User(nome, birthday, bio));
+    public User createUser(String nome, Date birthday, String bio, String passPhrase) {
+        User saida = userRepository.insert(new User(nome, birthday, bio, passPhrase));
         return saida;
     }
 

@@ -30,7 +30,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> postUser(@RequestBody Map<String, String> payload) throws ParseException {
         Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(payload.get("birthday"));
-        return new ResponseEntity<User>(userService.createUser(payload.get("nome"), date1, payload.get("bio")),
+        return new ResponseEntity<User>(
+                userService.createUser(payload.get("nome"), date1, payload.get("bio"), payload.get("pass")),
                 HttpStatus.CREATED);
     }
 
