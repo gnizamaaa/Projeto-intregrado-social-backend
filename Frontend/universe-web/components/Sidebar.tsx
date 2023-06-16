@@ -2,6 +2,7 @@ import { BsHouseFill, BsBellFill } from 'react-icons/bs'
 import { FaUser } from 'react-icons/fa'
 import SidebarLogo from './SidebarLogo';
 import SidebarItem from './SidebarItem';
+import SidebarTweet from './SidebarTweet';
 
 
 const Sidebar = () => {
@@ -35,6 +36,7 @@ const Sidebar = () => {
                         icon={item.icon}
                     />
                 ))}
+                <SidebarTweet />
             </div>
         </div>
     );
