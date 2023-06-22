@@ -24,15 +24,25 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> getallUsers() {
-        return new ResponseEntity<List<User>>(userService.AllUsers(), HttpStatus.OK);
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+        teste.set("Access-Control-Allow-Origin", "*");
+
+        //return new ResponseEntity<List<User>>(userService.AllUsers(), HttpStatus.OK);
+        return ResponseEntity.ok().headers(teste).body(userService.AllUsers());
     }
 
     @PostMapping
     public ResponseEntity<User> postUser(@RequestBody Map<String, String> payload) throws ParseException {
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+        teste.set("Access-Control-Allow-Origin", "*");
+
         Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(payload.get("birthday"));
-        return new ResponseEntity<User>(
-                userService.createUser(payload.get("nome"), date1, payload.get("bio"), payload.get("pass")),
-                HttpStatus.CREATED);
+        // return new ResponseEntity<User>(
+        //         userService.createUser(payload.get("nome"), date1, payload.get("bio"), payload.get("pass")),
+        //         HttpStatus.CREATED);
+
+        return ResponseEntity.status(HttpStatus.CREATED).headers(teste).body(userService.createUser(payload.get("nome"), date1, payload.get("bio"), payload.get("pass")));
+
     }
 
 }

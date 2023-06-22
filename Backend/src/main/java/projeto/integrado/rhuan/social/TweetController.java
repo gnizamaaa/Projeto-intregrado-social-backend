@@ -25,28 +25,28 @@ public class TweetController {
 
     @GetMapping
     public ResponseEntity<List<Tweet>> getallTweets() {
-        ResponseEntity<List<Tweet>> response = new ResponseEntity<List<Tweet>>(tweetService.AllTweets(), HttpStatus.OK);
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
         teste.set("Access-Control-Allow-Origin", "*");
-        
-        return ResponseEntity.ok().headers(teste).body(tweetService.AllTweets());
-        // HttpHeaders responseHeaders = new HttpHeaders();
-        // responseHeaders.set("Baeldung-Example-Header",
-        // "Value-ResponseEntityBuilderWithHttpHeaders");
 
-        // return ResponseEntity.ok()
-        // .headers(responseHeaders)
-        // .body("Response with header using ResponseEntity");
+        return ResponseEntity.ok().headers(teste).body(tweetService.AllTweets());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Tweet>> getEspecifcTweet(@PathVariable ObjectId id) {
-        return new ResponseEntity<Optional<Tweet>>(tweetService.singleTweet(id), HttpStatus.OK);
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+        teste.set("Access-Control-Allow-Origin", "*");
+
+       // return new ResponseEntity<Optional<Tweet>>(tweetService.singleTweet(id), HttpStatus.OK);
+        return ResponseEntity.ok().headers(teste).body(tweetService.singleTweet(id));
     }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<Optional<List<Tweet>>> getUserIdTweets(@PathVariable String id) {
-        return new ResponseEntity<Optional<List<Tweet>>>(tweetService.userIdTweets(id), HttpStatus.OK);
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+        teste.set("Access-Control-Allow-Origin", "*");
+
+        //return new ResponseEntity<Optional<List<Tweet>>>(tweetService.userIdTweets(id), HttpStatus.OK);
+        return ResponseEntity.ok().headers(teste).body(tweetService.userIdTweets(id));
     }
 
     @Autowired
@@ -54,13 +54,19 @@ public class TweetController {
 
     @PostMapping
     public ResponseEntity<Tweet> postTweet(@RequestBody Map<String, String> payload) {
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+        teste.set("Access-Control-Allow-Origin", "*");
+
         String[] imagens = payload.get("imagens").split(" ");
         Tweet novoTweet = tweetService.createTweet(payload.get("user"), payload.get("mensagem"), imagens);
 
         userService.insertUserTweet(new ObjectId(payload.get("user")), novoTweet);
 
-        return new ResponseEntity<Tweet>(
-                novoTweet,
-                HttpStatus.CREATED);
+        // return new ResponseEntity<Tweet>(
+        //         novoTweet,
+        //         HttpStatus.CREATED);
+
+        return ResponseEntity.status(HttpStatus.CREATED).headers(teste).body(novoTweet);
+
     }
 }
