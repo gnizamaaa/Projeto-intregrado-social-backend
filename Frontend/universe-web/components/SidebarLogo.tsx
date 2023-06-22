@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Bs0CircleFill } from "react-icons/bs";
+import { FaUniversity } from "react-icons/fa";
 
 const SidebarLogo = () => {
     const router = useRouter();
@@ -14,7 +14,7 @@ const SidebarLogo = () => {
         cursor-pointer
         transition">
             {/* TODO: Mudar aqui para o icone da rede futuramente */}
-            <Bs0CircleFill size={25} color="white" />
+            <FaUniversity size={25} color="white" />
         </div>
     );
 }

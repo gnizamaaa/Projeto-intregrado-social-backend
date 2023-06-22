@@ -1,5 +1,6 @@
 package projeto.integrado.rhuan.social;
 
+import java.net.http.HttpHeaders;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,7 +25,18 @@ public class TweetController {
 
     @GetMapping
     public ResponseEntity<List<Tweet>> getallTweets() {
-        return new ResponseEntity<List<Tweet>>(tweetService.AllTweets(), HttpStatus.OK);
+        ResponseEntity<List<Tweet>> response = new ResponseEntity<List<Tweet>>(tweetService.AllTweets(), HttpStatus.OK);
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+        teste.set("Access-Control-Allow-Origin", "*");
+        
+        return ResponseEntity.ok().headers(teste).body(tweetService.AllTweets());
+        // HttpHeaders responseHeaders = new HttpHeaders();
+        // responseHeaders.set("Baeldung-Example-Header",
+        // "Value-ResponseEntityBuilderWithHttpHeaders");
+
+        // return ResponseEntity.ok()
+        // .headers(responseHeaders)
+        // .body("Response with header using ResponseEntity");
     }
 
     @GetMapping("/{id}")
