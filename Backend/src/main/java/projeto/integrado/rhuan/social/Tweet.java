@@ -18,6 +18,9 @@ public class Tweet {
 
     private String userId;
 
+    //TODO: Implementar quando chegar em casa [ter acesso ao banco de forma mais visual]
+    //private String pseudonimo;
+
     private String releaseDate;
     private String mensagem;
     private String[] imagens;
