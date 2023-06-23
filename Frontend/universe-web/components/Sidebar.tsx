@@ -1,8 +1,10 @@
 import { BsHouseFill, BsBellFill } from 'react-icons/bs'
 import { FaUser } from 'react-icons/fa'
+import { AiOutlineLogin } from "react-icons/ai";
 import SidebarLogo from './SidebarLogo';
 import SidebarItem from './SidebarItem';
 import SidebarTweet from './SidebarTweet';
+import LoginModal from './LoginModal';
 
 
 const Sidebar = () => {
@@ -21,7 +23,11 @@ const Sidebar = () => {
             label: 'Profile',
             href: '/users/123',
             icon: FaUser
-        },
+        }, {
+            label: 'Login',
+            href: '/login',
+            icon: AiOutlineLogin
+        }
     ]
 
     return (

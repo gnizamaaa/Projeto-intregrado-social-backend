@@ -2,7 +2,7 @@ import { SetStateAction, useState } from 'react';
 
 export default function Login() {
   return (
-    <main className="flex justify-center items-center h-screen">
+    <main className="flex justify-center items-center h-screen bg-white">
       <form className="w-1/3 p-2 bg-black rounded-lg shadow-md text-white">
         <h2 className="text-2xl font-bold mb-6 text-center">Entre seu login</h2>
         <div className="mb-4">
