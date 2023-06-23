@@ -36,8 +36,11 @@ public class UserController {
     public ResponseEntity<Optional<String>> UserLogin(@PathVariable String nome, @PathVariable String pass) {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
         teste.set("Access-Control-Allow-Origin", "*");
-
-        return ResponseEntity.ok().headers(teste).body(userService.LoginUser(nome, pass));
+        if (userService.LoginUser(nome, pass).isPresent()) {
+            return ResponseEntity.ok().headers(teste).body(userService.LoginUser(nome, pass));
+        } else {
+            return ResponseEntity.badRequest().headers(teste).body(null);
+        }
     }
 
     @PostMapping
@@ -56,7 +59,7 @@ public class UserController {
             }
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).headers(teste)
-                        .body(null);
+                .body(null);
 
     }
 
