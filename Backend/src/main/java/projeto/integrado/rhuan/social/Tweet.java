@@ -18,18 +18,18 @@ public class Tweet {
 
     private String userId;
 
-    //TODO: Implementar quando chegar em casa [ter acesso ao banco de forma mais visual]
-    //private String pseudonimo;
+    private String pseudonimo;
 
     private String releaseDate;
     private String mensagem;
     private String[] imagens;
 
-    public Tweet(String userId, String mensagem, String[] imagens) {
+    public Tweet(String userId, String mensagem, String pseudonimo,String[] imagens) {
         this.releaseDate = (new Date().toString());
         this.userId = userId;
         this.mensagem = mensagem;
         this.imagens = imagens;
+        this.pseudonimo = pseudonimo;
     }
 
 }

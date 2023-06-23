@@ -5,11 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,21 +29,34 @@ public class UserController {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
         teste.set("Access-Control-Allow-Origin", "*");
 
-        //return new ResponseEntity<List<User>>(userService.AllUsers(), HttpStatus.OK);
         return ResponseEntity.ok().headers(teste).body(userService.AllUsers());
     }
 
+    @GetMapping("/{nome}/{pass}")
+    public ResponseEntity<Optional<String>> UserLogin(@PathVariable String nome, @PathVariable String pass) {
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+        teste.set("Access-Control-Allow-Origin", "*");
+
+        return ResponseEntity.ok().headers(teste).body(userService.LoginUser(nome, pass));
+    }
+
     @PostMapping
-    public ResponseEntity<User> postUser(@RequestBody Map<String, String> payload) throws ParseException {
+    public ResponseEntity<Optional<String>> postUser(@RequestBody Map<String, String> payload) throws ParseException {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
         teste.set("Access-Control-Allow-Origin", "*");
 
         Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(payload.get("birthday"));
-        // return new ResponseEntity<User>(
-        //         userService.createUser(payload.get("nome"), date1, payload.get("bio"), payload.get("pass")),
-        //         HttpStatus.CREATED);
 
-        return ResponseEntity.status(HttpStatus.CREATED).headers(teste).body(userService.createUser(payload.get("nome"), date1, payload.get("bio"), payload.get("pass")));
+        if (!userService.isUserExist(payload.get("nome"))) {
+            Optional<User> temp = userService.createUser(payload.get("nome"), date1, payload.get("bio"),
+                    payload.get("pass"));
+            if (temp.isPresent()) {
+                return ResponseEntity.status(HttpStatus.CREATED).headers(teste)
+                        .body(Optional.of(temp.get().getId().toHexString()));
+            }
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).headers(teste)
+                        .body(null);
 
     }
 

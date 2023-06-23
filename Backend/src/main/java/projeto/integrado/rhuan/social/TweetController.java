@@ -1,6 +1,6 @@
 package projeto.integrado.rhuan.social;
 
-import java.net.http.HttpHeaders;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,7 +36,6 @@ public class TweetController {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
         teste.set("Access-Control-Allow-Origin", "*");
 
-       // return new ResponseEntity<Optional<Tweet>>(tweetService.singleTweet(id), HttpStatus.OK);
         return ResponseEntity.ok().headers(teste).body(tweetService.singleTweet(id));
     }
 
@@ -45,7 +44,6 @@ public class TweetController {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
         teste.set("Access-Control-Allow-Origin", "*");
 
-        //return new ResponseEntity<Optional<List<Tweet>>>(tweetService.userIdTweets(id), HttpStatus.OK);
         return ResponseEntity.ok().headers(teste).body(tweetService.userIdTweets(id));
     }
 
@@ -53,18 +51,15 @@ public class TweetController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<Tweet> postTweet(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<Tweet> postTweet(@RequestBody Map<String, String> payload) throws ParseException {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
         teste.set("Access-Control-Allow-Origin", "*");
 
         String[] imagens = payload.get("imagens").split(" ");
-        Tweet novoTweet = tweetService.createTweet(payload.get("user"), payload.get("mensagem"), imagens);
+        Tweet novoTweet = tweetService.createTweet(payload.get("user"), payload.get("mensagem"),
+                payload.get("pseudonimo"), imagens);
 
         userService.insertUserTweet(new ObjectId(payload.get("user")), novoTweet);
-
-        // return new ResponseEntity<Tweet>(
-        //         novoTweet,
-        //         HttpStatus.CREATED);
 
         return ResponseEntity.status(HttpStatus.CREATED).headers(teste).body(novoTweet);
 
