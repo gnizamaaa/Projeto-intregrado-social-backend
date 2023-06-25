@@ -5,9 +5,22 @@ import SidebarLogo from './SidebarLogo';
 import SidebarItem from './SidebarItem';
 import SidebarTweet from './SidebarTweet';
 import LoginModal from './LoginModal';
+import { render } from 'react-dom';
+import { useState } from 'react';
 
 
 const Sidebar = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     const itens = [
         {
             label: 'Home',
@@ -26,9 +39,11 @@ const Sidebar = () => {
         }, {
             label: 'Login',
             href: '/login',
-            icon: AiOutlineLogin
+            icon: AiOutlineLogin,
+            onclick: openModal
         }
     ]
+
 
     return (
         <div className='col-span-1 h-full pr-4 nd:pr-6'>
@@ -40,10 +55,12 @@ const Sidebar = () => {
                         href={item.href}
                         label={item.label}
                         icon={item.icon}
+                        onclick={item.onclick}
                     />
                 ))}
                 <SidebarTweet />
             </div>
+            <LoginModal isOpen={isModalOpen} onClose={closeModal} />
         </div>
     );
 }
