@@ -19,7 +19,7 @@ const TweetModal: React.FC<TweetModalProps> = ({ isOpen, onClose }) => {
 
     // Cadastro
     const [pseudonimo, setPseudonimo] = useState(username.username);
-    const [mensagem, setMensagem] = useState("Escreva seu post aqui e cuidaremos do resto!");
+    const [mensagem, setMensagem] = useState("Escreva aqui seu post e cuidaremos do resto!");
     const [imagens, setImagem] = useState(" ");
 
     const handleSubmit = () => {
@@ -49,7 +49,7 @@ const TweetModal: React.FC<TweetModalProps> = ({ isOpen, onClose }) => {
     }
 
     const handleBack = () => {
-        setMensagem("Escreva seu post aqui e cuidaremos do resto!")
+        setMensagem("Escreva aqui seu post e cuidaremos do resto!");
         onClose();
     }
 
@@ -83,9 +83,9 @@ const TweetModal: React.FC<TweetModalProps> = ({ isOpen, onClose }) => {
 
                         <div className="bottom-0 right-0 mt-3 ml-auto flex rounded-full gap-1 p-2 
             items-center justify-center bg-sky-500 hover:bg-opacity-80 
-            transition cursor-pointer w-24" onClick={handleSubmit}>
-                            <FaBroom size={30} color="white" />
-                            <p className="lg:block text-white text-base">
+            transition cursor-pointer w-fit" onClick={handleSubmit}>
+                            <FaBroom size={20} color="white" />
+                            <p className="block text-white text-base">
                                 Publique!
                             </p>
                         </div>

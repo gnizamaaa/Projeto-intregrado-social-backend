@@ -23,6 +23,17 @@ export default function Home() {
 
   useEffect(() => {
     getTweets();
+
+    const interval = setInterval(() => {
+      if (window.scrollY <= 0 || window.pageYOffset >= (document.documentElement.scrollHeight - window.innerHeight)) {
+        getTweets();
+      }
+    }, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+
   }, []);
 
 
