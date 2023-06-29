@@ -38,7 +38,7 @@ const Sidebar = () => {
             icon: FaUser
         }, {
             label: 'Login',
-            href: '/login',
+            href: '',
             icon: AiOutlineLogin,
             onclick: openModal
         }

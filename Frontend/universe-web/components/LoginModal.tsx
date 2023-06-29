@@ -12,6 +12,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["userId"]);
+  const [username, setUsername] = useCookies(["username"]);
+
 
   // Cadastro
   const [birthday, setBirthday] = useState("");
@@ -33,6 +35,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
       });
 
     if (cookies.userId != null) {
+      setUsername("username", user);
       onClose(); // Close the modal after successful login
     }
   };

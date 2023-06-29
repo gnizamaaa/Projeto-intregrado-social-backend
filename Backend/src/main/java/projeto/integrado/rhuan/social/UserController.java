@@ -45,6 +45,13 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<String>> getUsernameByID(@PathVariable String id) {
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+        //teste.set("Access-Control-Allow-Origin", "*");
+        return ResponseEntity.ok().headers(teste).body(userService.getUsernamebyID(id));
+    }
+
     @PostMapping
     public ResponseEntity<String> postUser(@RequestBody Map<String, String> payload) throws ParseException {
         Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(payload.get("birthday"));

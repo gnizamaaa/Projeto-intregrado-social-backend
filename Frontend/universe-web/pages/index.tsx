@@ -8,7 +8,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
-  useEffect(() => {
+
+  const getTweets = () => {
     fetch('http://localhost:8080/api/v1/tweets')
       .then((response) => response.json())
       .then((data) => {
@@ -18,6 +19,10 @@ export default function Home() {
       .catch((err) => {
         console.log(err.message);
       });
+  }
+
+  useEffect(() => {
+    getTweets();
   }, []);
 
 
@@ -25,7 +30,7 @@ export default function Home() {
     <div>
       <Header label="Home" />
 
-      {posts.map((item, index) => (
+      {posts.slice().reverse().map((item, index) => (
         <div key={index}>
           {/* <td>{item.userId}</td>
           <td>{item.mensagem}</td>

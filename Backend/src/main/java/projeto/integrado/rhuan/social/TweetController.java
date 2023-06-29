@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,18 +51,19 @@ public class TweetController {
     @Autowired
     private UserService userService;
 
+    @CrossOrigin
     @PostMapping
-    public ResponseEntity<Tweet> postTweet(@RequestBody Map<String, String> payload) throws ParseException {
+    public ResponseEntity<String> postTweet(@RequestBody Map<String, String> payload) throws ParseException {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
-        teste.set("Access-Control-Allow-Origin", "*");
+        //teste.set("Access-Control-Allow-Origin", "*");
 
-        String[] imagens = payload.get("imagens").split(" ");
+        ///String[] imagens = payload.get("imagens").split(" ");
+        String[]imagens = null;
         Tweet novoTweet = tweetService.createTweet(payload.get("user"), payload.get("mensagem"),
                 payload.get("pseudonimo"), imagens);
 
         userService.insertUserTweet(new ObjectId(payload.get("user")), novoTweet);
-
-        return ResponseEntity.status(HttpStatus.CREATED).headers(teste).body(novoTweet);
+        return ResponseEntity.status(HttpStatus.CREATED).headers(teste).body(novoTweet.getId().toHexString());
 
     }
 }

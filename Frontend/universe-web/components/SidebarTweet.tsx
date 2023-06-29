@@ -1,12 +1,17 @@
 import { useRouter } from "next/router"
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 import { FaBroom } from "react-icons/fa";
+import LoginModal from "./LoginModal";
 import TweetModal from "./TweetModal";
 
 const SidebarTweet = () => {
     const router = useRouter();
 
+    const [cookies] = useCookies(["userId"]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -16,10 +21,26 @@ const SidebarTweet = () => {
         setIsModalOpen(false);
     };
 
+    const openLoginModal = () => {
+        setIsLoginModalOpen(true);
+    };
+
+    const closeLoginModal = () => {
+        setIsLoginModalOpen(false);
+    };
+
+    const handleTweet = () => {
+        if(cookies.userId!=null){
+            openModal();
+        }else openLoginModal();
+    };
+
+
     return (
         <>
             <TweetModal isOpen={isModalOpen} onClose={closeModal} />
-            <div onClick={openModal}>
+            <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
+            <div onClick={handleTweet}>
                 <div className="mt-3 lg:hidden rounded-full h-14 w-14 p-4 flex 
             items-center justify-center bg-sky-500 hover:bg-opacity-80 
             transition cursor-pointer">

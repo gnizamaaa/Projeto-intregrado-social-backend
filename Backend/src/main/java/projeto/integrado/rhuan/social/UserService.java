@@ -39,6 +39,11 @@ public class UserService {
             return null;
     }
 
+    public Optional<String> getUsernamebyID(String ID) {
+        Optional<User> candidato = userRepository.findById(new ObjectId(ID));
+        return Optional.of(candidato.get().getNome());
+    }
+
     public Boolean isUserExist(String nome) {
         Optional<User> candidato = userRepository.findUserByNome(nome);
         if (candidato.isPresent()) {

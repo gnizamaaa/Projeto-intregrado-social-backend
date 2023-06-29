@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
         <div className="border-y-[1px] border-neutral-800 p-2">
             <div className="items-center gap-2 mx-2">
                 {/* TODO: Mudar Dps q arrumar usuario!!, pegar nick atraves do id */}
-                <p className="text-sm">{data.userId}:</p>
+                <p className="text-sm">{data.pseudonimo}:</p>
                 <p>{data.mensagem}</p>
                 <p className="text-xs text-end">Postado em: {data.releaseDate}</p>
             </div>
