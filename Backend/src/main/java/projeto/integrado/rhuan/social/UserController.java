@@ -29,7 +29,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getallUsers() {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
-        teste.set("Access-Control-Allow-Origin", "*");
+        //teste.set("Access-Control-Allow-Origin", "*");
 
         return ResponseEntity.ok().headers(teste).body(userService.AllUsers());
     }
@@ -37,7 +37,7 @@ public class UserController {
     @GetMapping("/{nome}/{pass}")
     public ResponseEntity<Optional<String>> UserLogin(@PathVariable String nome, @PathVariable String pass) {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
-        teste.set("Access-Control-Allow-Origin", "*");
+        //teste.set("Access-Control-Allow-Origin", "*");
         if (userService.LoginUser(nome, pass).isPresent()) {
             return ResponseEntity.ok().headers(teste).body(userService.LoginUser(nome, pass));
         } else {
