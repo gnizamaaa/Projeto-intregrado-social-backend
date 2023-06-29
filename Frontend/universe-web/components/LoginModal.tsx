@@ -51,11 +51,15 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
         bio: bio,
       }),
     };
-    fetch("http://localhost:8080/api/v1/users/", requestOptions)
+
+    fetch("http://localhost:8080/api/v1/users", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         setCookie("userId", data);
+        if (data.userId != null) {
+          onClose();
+        }
       })
       .catch((err) => {
         console.log(err.message);
@@ -69,9 +73,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   return (
     <>
       <div
-        className={`fixed inset-0 flex items-center justify-center z-50 bg-neutral-600 bg-opacity-80 ${
-          isOpen ? "" : "hidden"
-        }`}
+        className={`fixed inset-0 flex items-center justify-center z-50 bg-neutral-600 bg-opacity-80 ${isOpen ? "" : "hidden"
+          }`}
       >
         <div className="relative w-flex p-4 rounded-lg mx-auto bg-neutral-800">
           <button className="right-90" onClick={onClose}>

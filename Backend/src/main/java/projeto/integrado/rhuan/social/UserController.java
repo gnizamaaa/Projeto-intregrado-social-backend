@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/v1/users")
 public class UserController {
 
@@ -44,21 +46,23 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Optional<String>> postUser(@RequestBody Map<String, String> payload) throws ParseException {
-        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
-        teste.set("Access-Control-Allow-Origin", "*");
+    public ResponseEntity<String> postUser(@RequestBody Map<String, String> payload) throws ParseException {
+        Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(payload.get("birthday"));
 
-        Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(payload.get("birthday"));
+        // Create the response headers and set the necessary CORS headers
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        //headers.set("Access-Control-Allow-Origin", "*");
 
+        // Modify the response creation to include the headers and response body
         if (!userService.isUserExist(payload.get("nome"))) {
             Optional<User> temp = userService.createUser(payload.get("nome"), date1, payload.get("bio"),
                     payload.get("pass"));
             if (temp.isPresent()) {
-                return ResponseEntity.status(HttpStatus.CREATED).headers(teste)
-                        .body(Optional.of(temp.get().getId().toHexString()));
+                return ResponseEntity.status(HttpStatus.CREATED).headers(headers)
+                        .body(temp.get().getId().toHexString());
             }
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).headers(teste)
+        return ResponseEntity.status(HttpStatus.CONFLICT).headers(headers)
                 .body(null);
 
     }
