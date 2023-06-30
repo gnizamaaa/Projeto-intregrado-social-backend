@@ -28,7 +28,7 @@ export default function Home() {
       if (window.scrollY <= 0 || window.pageYOffset >= (document.documentElement.scrollHeight - window.innerHeight)) {
         getTweets();
       }
-    }, 100);
+    }, 4000);
 
     return () => {
       clearInterval(interval);

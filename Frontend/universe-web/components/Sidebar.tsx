@@ -7,6 +7,7 @@ import SidebarTweet from './SidebarTweet';
 import LoginModal from './LoginModal';
 import { render } from 'react-dom';
 import { useState } from 'react';
+import SidebarLogout from './SidebarLogout';
 
 
 const Sidebar = () => {
@@ -58,6 +59,7 @@ const Sidebar = () => {
                         onclick={item.onclick}
                     />
                 ))}
+                <SidebarLogout/>
                 <SidebarTweet />
             </div>
             <LoginModal isOpen={isModalOpen} onClose={closeModal} />
