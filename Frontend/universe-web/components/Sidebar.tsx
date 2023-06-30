@@ -52,7 +52,7 @@ const Sidebar = () => {
                 <SidebarLogo />
                 {itens.map((item) => (
                     <SidebarItem
-                        key={item.href}
+                        key={item.label}
                         href={item.href}
                         label={item.label}
                         icon={item.icon}

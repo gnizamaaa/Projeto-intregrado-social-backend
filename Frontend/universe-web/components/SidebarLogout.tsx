@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import SidebarLogo from './SidebarLogo';
+import SidebarItem from './SidebarItem';
+import { AiOutlineLogout } from 'react-icons/ai';
 
 const SidebarLogout = () => {
     const [showButton, setShowButton] = useState(true);
@@ -26,9 +28,13 @@ const SidebarLogout = () => {
     return (
         <div>
             {showButton && (
-                <button onClick={handleButtonClick}>
-                    Log out
-                </button>
+                // <button onClick={handleButtonClick}>
+                //     Log out
+                // </button>
+                <SidebarItem
+                    label={'Logout'}
+                    icon={AiOutlineLogout}
+                    onclick={handleButtonClick} />
             )}
         </div>
     );
