@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
-import SidebarLogo from './SidebarLogo';
+import React, {useState, useEffect} from 'react';
+import {useCookies} from 'react-cookie';
 import SidebarItem from './SidebarItem';
-import { AiOutlineLogout } from 'react-icons/ai';
+import {AiOutlineLogout} from 'react-icons/ai';
 
 const SidebarLogout = () => {
     const [showButton, setShowButton] = useState(true);
@@ -10,33 +9,30 @@ const SidebarLogout = () => {
 
 
     useEffect(() => {
-        // Check if the cookie is set
+        // Checando o valor do cookie e setando a visibilidade do botao
+        // para falsa quando o cookie nao esta definido e verdadeira
+        // para quando possui um valor valido
         const cookieValue = cookies.userId;
         if (cookieValue === 'undefined') {
-            setShowButton(false); // Cookie is set, hide the button
-        } else setShowButton(true);
+            setShowButton(false);
+        } else 
+            setShowButton(true);
+        
     }, [cookies.userId]);
 
-    const handleButtonClick = () => {
-        // Perform actions when the button is clicked
-        // ...
-        // Set the cookie
+    const handleLogout = () => {
         setCookie("userId", undefined);
-        setShowButton(false); // Hide the button after setting the cookie
+        setShowButton(false);
     };
 
     return (
-        <div>
-            {showButton && (
-                // <button onClick={handleButtonClick}>
-                //     Log out
-                // </button>
-                <SidebarItem
-                    label={'Logout'}
+        <div> {
+            showButton && (
+                <SidebarItem label={'Logout'}
                     icon={AiOutlineLogout}
-                    onclick={handleButtonClick} />
-            )}
-        </div>
+                    onclick={handleLogout}/>
+            )
+        } </div>
     );
 };
 
