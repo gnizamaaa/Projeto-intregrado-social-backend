@@ -30,7 +30,7 @@ const SidebarTweet = () => {
     };
 
     const handleTweet = () => {
-        if(cookies.userId!=null){
+        if(!(cookies.userId === 'undefined')){
             openModal();
         }else openLoginModal();
     };
