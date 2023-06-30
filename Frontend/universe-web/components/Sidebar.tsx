@@ -7,6 +7,7 @@ import SidebarTweet from './SidebarTweet';
 import LoginModal from './LoginModal';
 import { render } from 'react-dom';
 import { useState } from 'react';
+import SidebarLogout from './SidebarLogout';
 
 
 const Sidebar = () => {
@@ -51,13 +52,14 @@ const Sidebar = () => {
                 <SidebarLogo />
                 {itens.map((item) => (
                     <SidebarItem
-                        key={item.href}
+                        key={item.label}
                         href={item.href}
                         label={item.label}
                         icon={item.icon}
                         onclick={item.onclick}
                     />
                 ))}
+                <SidebarLogout/>
                 <SidebarTweet />
             </div>
             <LoginModal isOpen={isModalOpen} onClose={closeModal} />
