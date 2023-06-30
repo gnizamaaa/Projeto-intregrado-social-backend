@@ -12,7 +12,7 @@ const SidebarLogout = () => {
         const cookieValue = cookies.userId;
         if (cookieValue === 'undefined') {
             setShowButton(false); // Cookie is set, hide the button
-        }
+        } else setShowButton(true);
     }, [cookies.userId]);
 
     const handleButtonClick = () => {
