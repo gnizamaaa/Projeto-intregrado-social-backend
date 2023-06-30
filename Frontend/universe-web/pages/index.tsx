@@ -13,7 +13,6 @@ export default function Home() {
     fetch('http://localhost:8080/api/v1/tweets')
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setPosts(data);
       })
       .catch((err) => {

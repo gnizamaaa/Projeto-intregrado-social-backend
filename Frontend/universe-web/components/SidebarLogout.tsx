@@ -10,10 +10,7 @@ const SidebarLogout = () => {
     useEffect(() => {
         // Check if the cookie is set
         const cookieValue = cookies.userId;
-        console.log(cookieValue);
-        console.log("Rodou!");
         if (cookieValue === 'undefined') {
-            console.log('entrou no if');
             setShowButton(false); // Cookie is set, hide the button
         }
     }, [cookies.userId]);
