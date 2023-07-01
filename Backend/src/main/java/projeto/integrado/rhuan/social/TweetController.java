@@ -48,6 +48,22 @@ public class TweetController {
         return ResponseEntity.ok().headers(teste).body(tweetService.userIdTweets(id));
     }
 
+    @CrossOrigin
+    @PostMapping("/liked")
+    public ResponseEntity<String> likeTweetReq(@RequestBody Map<String, String> payload) throws ParseException {
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+
+        try {
+            tweetService.likeTweet(new ObjectId(payload.get("userId")), new ObjectId(payload.get("tweetId")));
+            return ResponseEntity.status(HttpStatus.CREATED).headers(teste).body("OK!");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).headers(teste).body("Erro!");
+
+        }
+
+    }
+
     @Autowired
     private UserService userService;
 
@@ -55,15 +71,15 @@ public class TweetController {
     @PostMapping
     public ResponseEntity<String> postTweet(@RequestBody Map<String, String> payload) throws ParseException {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
-        //teste.set("Access-Control-Allow-Origin", "*");
+        // teste.set("Access-Control-Allow-Origin", "*");
 
-        ///String[] imagens = payload.get("imagens").split(" ");
-        String[]imagens = null;
+        /// String[] imagens = payload.get("imagens").split(" ");
+        String[] imagens = null;
         Tweet novoTweet = tweetService.createTweet(payload.get("user"), payload.get("mensagem"),
                 payload.get("pseudonimo"), imagens);
 
         userService.insertUserTweet(new ObjectId(payload.get("user")), novoTweet);
         return ResponseEntity.status(HttpStatus.CREATED).headers(teste).body(novoTweet.getId().toHexString());
-
     }
+
 }
