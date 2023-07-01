@@ -51,14 +51,13 @@ public class TweetController {
     @CrossOrigin
     @PostMapping("/liked")
     public ResponseEntity<String> likeTweetReq(@RequestBody Map<String, String> payload) throws ParseException {
-        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
-
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
         try {
             tweetService.likeTweet(new ObjectId(payload.get("userId")), new ObjectId(payload.get("tweetId")));
-            return ResponseEntity.status(HttpStatus.CREATED).headers(teste).body("OK!");
+            return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body("OK!");
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).headers(teste).body("Erro!");
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).headers(headers).body("Erro!");
 
         }
 
