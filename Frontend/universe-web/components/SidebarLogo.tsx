@@ -13,7 +13,6 @@ const SidebarLogo = () => {
         hover:bg-blue-300 hover:bg-opacity-10
         cursor-pointer
         transition">
-            {/* TODO: Mudar aqui para o icone da rede futuramente */}
             <FaUniversity size={25} color="white" />
         </div>
     );
