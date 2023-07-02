@@ -36,7 +36,7 @@ const TweetModal: React.FC<TweetModalProps> = ({ isOpen, onClose }) => {
             }),
         };
 
-        fetch("http://localhost:8080/api/v1/tweets/", requestOptions)
+        fetch("http://localhost:8080/api/v1/tweets", requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);

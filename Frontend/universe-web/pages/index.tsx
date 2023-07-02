@@ -18,6 +18,7 @@ export default function Home() {
       .catch((err) => {
         console.log(err.message);
       });
+      console.log("Sucesso pegando os tweets");
   }
 
   useEffect(() => {

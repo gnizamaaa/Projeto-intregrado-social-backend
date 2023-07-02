@@ -5,6 +5,10 @@ import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.ExecutableUpdateOperation.UpdateWithUpdate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,7 +32,20 @@ public class TweetService {
         return tweetRepository.findTweetByUserId(id);
     }
 
-    public Tweet createTweet(String user, String mensagem, String pseudonimo,String[] imagens) {
-        return tweetRepository.insert(new Tweet(user, mensagem, pseudonimo,imagens));
+    public Tweet createTweet(String user, String mensagem, String pseudonimo, String[] imagens) {
+        return tweetRepository.insert(new Tweet(user, mensagem, pseudonimo, imagens));
+    }
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    // Inserir o tweet novo no usuario
+    public void likeTweet(ObjectId userId, ObjectId likedTweetId) {
+        Optional<Tweet> gostado = tweetRepository.findById(likedTweetId);
+        if (!gostado.get().getLiked().contains(userId))
+            mongoTemplate.update(Tweet.class)
+                    .matching(Criteria.where("_id").is(likedTweetId))
+                    .apply(new Update().push("liked").value(userId))
+                    .first();
     }
 }
