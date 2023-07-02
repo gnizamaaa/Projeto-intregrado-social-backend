@@ -41,11 +41,11 @@ public class TweetService {
 
     // Inserir o tweet novo no usuario
     public void likeTweet(ObjectId userId, ObjectId likedTweetId) {
-        UpdateWithUpdate<Tweet> teste = mongoTemplate.update(Tweet.class)
-                .matching(Criteria.where("_id").is(likedTweetId));
-
-        teste.apply(new Update().push("liked").value(userId))
-                .first();
-
+        Optional<Tweet> gostado = tweetRepository.findById(likedTweetId);
+        if (!gostado.get().getLiked().contains(userId))
+            mongoTemplate.update(Tweet.class)
+                    .matching(Criteria.where("_id").is(likedTweetId))
+                    .apply(new Update().push("liked").value(userId))
+                    .first();
     }
 }
