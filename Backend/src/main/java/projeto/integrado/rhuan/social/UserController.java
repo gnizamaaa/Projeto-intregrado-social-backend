@@ -29,15 +29,22 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getallUsers() {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
-        //teste.set("Access-Control-Allow-Origin", "*");
+        // teste.set("Access-Control-Allow-Origin", "*");
 
         return ResponseEntity.ok().headers(teste).body(userService.AllUsers());
+    }
+
+    @GetMapping("/page/{name}")
+    public ResponseEntity<Optional<User>> getUserByUsername(@PathVariable String name) {
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+        // teste.set("Access-Control-Allow-Origin", "*");
+        return ResponseEntity.ok().headers(teste).body(userService.getUserbyUsername(name));
     }
 
     @GetMapping("/{nome}/{pass}")
     public ResponseEntity<Optional<String>> UserLogin(@PathVariable String nome, @PathVariable String pass) {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
-        //teste.set("Access-Control-Allow-Origin", "*");
+        // teste.set("Access-Control-Allow-Origin", "*");
         if (userService.LoginUser(nome, pass).isPresent()) {
             return ResponseEntity.ok().headers(teste).body(userService.LoginUser(nome, pass));
         } else {
@@ -48,7 +55,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<Optional<String>> getUsernameByID(@PathVariable String id) {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
-        //teste.set("Access-Control-Allow-Origin", "*");
+        // teste.set("Access-Control-Allow-Origin", "*");
         return ResponseEntity.ok().headers(teste).body(userService.getUsernamebyID(id));
     }
 
@@ -58,12 +65,12 @@ public class UserController {
 
         // Create the response headers and set the necessary CORS headers
         org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
-        //headers.set("Access-Control-Allow-Origin", "*");
+        // headers.set("Access-Control-Allow-Origin", "*");
 
         // Modify the response creation to include the headers and response body
         if (!userService.isUserExist(payload.get("nome"))) {
             Optional<User> temp = userService.createUser(payload.get("nome"), date1, payload.get("bio"),
-                    payload.get("pass"));
+                    payload.get("pass"), payload.get("email"));
             if (temp.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CREATED).headers(headers)
                         .body(temp.get().getId().toHexString());

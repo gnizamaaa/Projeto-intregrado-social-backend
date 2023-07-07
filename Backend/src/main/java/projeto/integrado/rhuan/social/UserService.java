@@ -20,10 +20,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> createUser(String nome, Date birthday, String bio, String passPhrase) {
+    public Optional<User> createUser(String nome, Date birthday, String bio, String passPhrase, String email) {
 
         if (!userRepository.findUserByNome(nome).isPresent()) {
-            User saida = userRepository.insert(new User(nome, birthday, bio, passPhrase));
+            User saida = userRepository.insert(new User(nome, birthday, bio, passPhrase, email));
             return Optional.of(saida);
         } else
             return null;
@@ -42,6 +42,11 @@ public class UserService {
     public Optional<String> getUsernamebyID(String ID) {
         Optional<User> candidato = userRepository.findById(new ObjectId(ID));
         return Optional.of(candidato.get().getNome());
+    }
+
+    public Optional<User> getUserbyUsername(String name) {
+        Optional<User> candidato = userRepository.findUserByNome(name);
+        return Optional.of(candidato.get());
     }
 
     public Boolean isUserExist(String nome) {
