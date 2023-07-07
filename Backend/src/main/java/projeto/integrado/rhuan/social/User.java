@@ -33,7 +33,6 @@ public class User {
     private String passPhrase;
     private String email;
 
-
     // // Universidade
     // @DocumentReference
     // private University univ;

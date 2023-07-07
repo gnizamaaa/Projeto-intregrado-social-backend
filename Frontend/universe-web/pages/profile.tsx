@@ -49,16 +49,27 @@ export default function Home() {
         return <div>Loading...</div>;
     }
 
+    function handleFollow(): void {
+        throw new Error('Function not implemented.');
+    }
+
     return (
         <div>
             <Header label={'Perfil de ' + (user?.toString())} />
-            <div className="profile-container">
-                <div className="profile-card">
-                    <h2>{userClass.nome}</h2>
-                    <p>@{userClass.username}</p>
-                    <p>{userClass.bio}</p>
+            <div className="profile-container flex justify-between items-center">
+                <div className="profile-card p-2">
+                    <h2 className="text-xl font-bold">{userClass.nome}</h2>
+                    <p className="text-gray-600">{userClass.bio}</p>
+                    <p className="text-gray-600">Seguindo: {userClass.follow.length}</p>
                 </div>
+                <button
+                    className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-full h-fit right-0"
+                    onClick={handleFollow}
+                >
+                    Follow me
+                </button>
             </div>
+
             {userClass.tweets?.slice().reverse().map((item, index) => (
                 <div key={index}>
                     <Tweet data={item} />
