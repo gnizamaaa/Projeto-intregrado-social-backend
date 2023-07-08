@@ -63,10 +63,10 @@ export default function Home() {
                     <p className="text-gray-600">Seguindo: {userClass.follow.length}</p>
                 </div>
                 <button
-                    className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-full h-fit right-0"
+                    className="bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-full h-fit right-0 m-2"
                     onClick={handleFollow}
                 >
-                    Follow me
+                    Seguir
                 </button>
             </div>
 
