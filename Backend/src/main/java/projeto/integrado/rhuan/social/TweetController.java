@@ -62,6 +62,21 @@ public class TweetController {
 
     }
 
+    @CrossOrigin
+    @PostMapping("/comentario")
+    public ResponseEntity<String> CommentTweetReq(@RequestBody Map<String, String> payload) throws ParseException {
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        try {
+            tweetService.createComment(payload.get("user"), payload.get("mensagem"), payload.get("pseudonimo"),null,
+                    new ObjectId(payload.get("paiId")));
+            return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body("{}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).headers(headers).body(e.toString());
+
+        }
+
+    }
+
     @Autowired
     private UserService userService;
 

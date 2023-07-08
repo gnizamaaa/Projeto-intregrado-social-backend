@@ -2,6 +2,8 @@ package projeto.integrado.rhuan.social;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.bson.types.ObjectId;
@@ -34,13 +36,30 @@ public class Tweet {
     // @DocumentReference
     private Set<ObjectId> liked;
 
-    public Tweet(String userId, String mensagem, String pseudonimo,String[] imagens) {
+    // @DocumentReference
+    private Tweet pai; // Quando eh um comentario, pai eh o tweet original
+
+    private List<Tweet> comentarios;
+
+    public Tweet(String userId, String mensagem, String pseudonimo, String[] imagens) {
         this.releaseDate = (new Date().toString());
         this.userId = userId;
         this.mensagem = mensagem;
         this.imagens = imagens;
         this.pseudonimo = pseudonimo;
         this.liked = new HashSet<>();
+        this.comentarios = new LinkedList<>();
+    }
+
+    public Tweet(String userId, String mensagem, String pseudonimo, String[] imagens, Tweet pai) {
+        this.releaseDate = (new Date().toString());
+        this.userId = userId;
+        this.mensagem = mensagem;
+        this.imagens = imagens;
+        this.pseudonimo = pseudonimo;
+        this.pai = pai;
+        this.liked = new HashSet<>();
+        this.comentarios = new LinkedList<>();
     }
 
 }

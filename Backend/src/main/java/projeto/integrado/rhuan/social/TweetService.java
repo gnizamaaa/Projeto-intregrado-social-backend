@@ -38,6 +38,19 @@ public class TweetService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    public Tweet createComment(String user, String mensagem, String pseudonimo, String[] imagens, ObjectId pai) {
+
+        Tweet novo = new Tweet(user, mensagem, pseudonimo, imagens, tweetRepository.findById(pai).get());
+        tweetRepository.insert(novo);
+
+        //Colocar na lista de comentarios do pai
+        mongoTemplate.update(Tweet.class)
+                .matching(Criteria.where("_id").is(pai))
+                .apply(new Update().push("comentarios").value(novo))
+                .first();
+        return novo;
+    }
+
     // Inserir o tweet novo no usuario
     public void likeTweet(ObjectId userId, ObjectId likedTweetId) {
         Optional<Tweet> gostado = tweetRepository.findById(likedTweetId);
