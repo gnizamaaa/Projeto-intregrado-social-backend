@@ -31,6 +31,7 @@ public class User {
     private Date birthday;
     private String bio;
     private String passPhrase;
+    private String email;
 
     // // Universidade
     // @DocumentReference
@@ -42,13 +43,14 @@ public class User {
     @DocumentReference
     private List<Tweet> tweets;
 
-    public User(String nome, Date birthday, String bio, String passPhrase) {
+    public User(String nome, Date birthday, String bio, String passPhrase, String email) {
         // this.link = link;
         this.id = new ObjectId();
         this.nome = nome;
         this.birthday = birthday;
         this.bio = bio;
         this.passPhrase = passPhrase;
+        this.email = email;
         this.follow = new LinkedList<>();
         this.tweets = new LinkedList<>();
 

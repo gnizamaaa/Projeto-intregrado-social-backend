@@ -8,11 +8,15 @@ import LoginModal from './LoginModal';
 import { render } from 'react-dom';
 import { useState } from 'react';
 import SidebarLogout from './SidebarLogout';
+import { useRouter } from 'next/router';
+import { useCookies } from 'react-cookie';
 
 
 const Sidebar = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const router = useRouter();
+    const [username] = useCookies(["username"]);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -20,6 +24,16 @@ const Sidebar = () => {
 
     const closeModal = () => {
         setIsModalOpen(false);
+    };
+
+    const openPerfil = () => {
+
+
+        router.push({
+            pathname: '/profile',
+            query: { user: username.username }
+        });
+
     };
 
     const itens = [
@@ -35,8 +49,9 @@ const Sidebar = () => {
         },
         {
             label: 'Profile',
-            href: '/users/123',
-            icon: FaUser
+            href: '/profile',
+            icon: FaUser,
+            onclick: openPerfil
         }, {
             label: 'Login',
             href: '',
@@ -59,7 +74,7 @@ const Sidebar = () => {
                         onclick={item.onclick}
                     />
                 ))}
-                <SidebarLogout/>
+                <SidebarLogout />
                 <SidebarTweet />
             </div>
             <LoginModal isOpen={isModalOpen} onClose={closeModal} />
