@@ -59,6 +59,13 @@ public class UserController {
         return ResponseEntity.ok().headers(teste).body(userService.getUsernamebyID(id));
     }
 
+    @GetMapping("/notif/{id}")
+    public ResponseEntity<Optional<List<Notificacao>>> getNotificationsByID(@PathVariable String id) {
+        org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
+        // teste.set("Access-Control-Allow-Origin", "*");
+        return ResponseEntity.ok().headers(teste).body(userService.getNotificationsByID(id));
+    }
+
     @PostMapping
     public ResponseEntity<String> postUser(@RequestBody Map<String, String> payload) throws ParseException {
         Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(payload.get("birthday"));

@@ -44,6 +44,11 @@ public class UserService {
         return Optional.of(candidato.get().getNome());
     }
 
+    public Optional<List<Notificacao>> getNotificationsByID(String ID) {
+        Optional<User> candidato = userRepository.findById(new ObjectId(ID));
+        return Optional.of(candidato.get().getNotif());
+    }
+
     public Optional<User> getUserbyUsername(String name) {
         Optional<User> candidato = userRepository.findUserByNome(name);
         return Optional.of(candidato.get());
@@ -65,6 +70,13 @@ public class UserService {
         mongoTemplate.update(User.class)
                 .matching(Criteria.where("_id").is(id))
                 .apply(new Update().push("tweets").value(novoTweet))
+                .first();
+    }
+
+    public void insertNotifTweet(ObjectId id, Notificacao novaNotificacao) {
+        mongoTemplate.update(User.class)
+                .matching(Criteria.where("_id").is(id))
+                .apply(new Update().push("notif").value(novaNotificacao))
                 .first();
 
     }

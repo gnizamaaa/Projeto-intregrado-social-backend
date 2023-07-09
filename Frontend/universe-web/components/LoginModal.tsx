@@ -50,6 +50,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
       body: JSON.stringify({
         nome: user,
         pass: password,
+        email: email,
         birthday: birthday,
         bio: bio,
       }),

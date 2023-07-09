@@ -38,6 +38,12 @@ public class TweetService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private NotificacaoService notificacaoService;
+
+    @Autowired
+    private UserService userService;
+
     public Tweet createComment(String user, String mensagem, String pseudonimo, String[] imagens, ObjectId pai) {
 
         Tweet novo = new Tweet(user, mensagem, pseudonimo, imagens, tweetRepository.findById(pai).get());
@@ -48,16 +54,33 @@ public class TweetService {
                 .matching(Criteria.where("_id").is(pai))
                 .apply(new Update().push("comentarios").value(novo))
                 .first();
+
+        Optional<Tweet> gostado = tweetRepository.findById(pai);
+
+        String donoTweetGostado = gostado.get().getUserId();
+
+        Notificacao novanotif = notificacaoService.createNotificacao(gostado.get(),
+                donoTweetGostado, '2');
+
+        userService.insertNotifTweet(new ObjectId(donoTweetGostado), novanotif);
         return novo;
     }
 
     // Inserir o tweet novo no usuario
     public void likeTweet(ObjectId userId, ObjectId likedTweetId) {
         Optional<Tweet> gostado = tweetRepository.findById(likedTweetId);
-        if (!gostado.get().getLiked().contains(userId))
+        if (!gostado.get().getLiked().contains(userId)) {
             mongoTemplate.update(Tweet.class)
                     .matching(Criteria.where("_id").is(likedTweetId))
                     .apply(new Update().push("liked").value(userId))
                     .first();
+
+            String donoTweetGostado = gostado.get().getUserId();
+
+            Notificacao novanotif = notificacaoService.createNotificacao(gostado.get(),
+                    donoTweetGostado, '1');
+
+            userService.insertNotifTweet(new ObjectId(donoTweetGostado), novanotif);
+        }
     }
 }
