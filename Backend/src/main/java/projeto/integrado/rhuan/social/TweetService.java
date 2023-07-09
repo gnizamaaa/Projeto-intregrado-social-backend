@@ -42,7 +42,10 @@ public class TweetService {
     private UserRepository userRepository;
 
     @Autowired
-    private NotificacaoRepository notificacaoRepository;
+    private NotificacaoService notificacaoService;
+
+    @Autowired
+    private UserService userService;
 
     public Tweet createComment(String user, String mensagem, String pseudonimo, String[] imagens, ObjectId pai) {
 
@@ -59,15 +62,10 @@ public class TweetService {
 
         String donoTweetGostado = gostado.get().getUserId();
 
-        Notificacao novanotif = new Notificacao(gostado.get(),
-                userRepository.findById(new ObjectId(donoTweetGostado)).get(),
-                '2');
-        notificacaoRepository.insert(novanotif);
+        Notificacao novanotif = notificacaoService.createNotificacao(gostado.get(),
+                donoTweetGostado, '2');
 
-        mongoTemplate.update(User.class)
-                .matching(Criteria.where("_id").is(donoTweetGostado))
-                .apply(new Update().push("notif").value(novanotif))
-                .first();
+        userService.insertNotifTweet(new ObjectId(donoTweetGostado), novanotif);
         return novo;
     }
 
@@ -82,15 +80,10 @@ public class TweetService {
 
             String donoTweetGostado = gostado.get().getUserId();
 
-            Notificacao novanotif = new Notificacao(gostado.get(),
-                    userRepository.findById(new ObjectId(donoTweetGostado)).get(),
-                    '1');
-            notificacaoRepository.insert(novanotif);
+            Notificacao novanotif = notificacaoService.createNotificacao(gostado.get(),
+                    donoTweetGostado, '1');
 
-            mongoTemplate.update(User.class)
-                    .matching(Criteria.where("_id").is(donoTweetGostado))
-                    .apply(new Update().push("notif").value(novanotif))
-                    .first();
+            userService.insertNotifTweet(new ObjectId(donoTweetGostado), novanotif);
         }
     }
 }

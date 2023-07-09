@@ -56,7 +56,7 @@ public class User {
         this.email = email;
         this.follow = new LinkedList<>();
         this.tweets = new LinkedList<>();
-        this.notif = new LinkedList<>();
+        // this.notif = new LinkedList<>();
 
     }
 

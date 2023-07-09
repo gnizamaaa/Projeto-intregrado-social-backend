@@ -26,8 +26,8 @@ public class Notificacao {
     @DocumentReference
     private Tweet referenciado;
 
-    @DocumentReference
-    private User ator;
+    // @DocumentReference
+    private String atorId;
 
     /**
      * Notacao utilizada para codificar os tipos:
@@ -36,10 +36,10 @@ public class Notificacao {
      */
     private char tipo;
 
-    public Notificacao(Tweet referenciado, User ator, char tipo) {
+    public Notificacao(Tweet referenciado, String ator, char tipo) {
         this.id = new ObjectId();
         this.referenciado = referenciado;
-        this.ator = ator;
+        this.atorId = ator;
         this.tipo = tipo;
     }
 
