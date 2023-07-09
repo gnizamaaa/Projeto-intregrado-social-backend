@@ -39,9 +39,6 @@ public class TweetService {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private NotificacaoService notificacaoService;
 
     @Autowired
