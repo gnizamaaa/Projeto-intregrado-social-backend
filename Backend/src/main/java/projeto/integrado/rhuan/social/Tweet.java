@@ -36,8 +36,7 @@ public class Tweet {
     // @DocumentReference
     private Set<ObjectId> liked;
 
-    // @DocumentReference
-    private Tweet pai; // Quando eh um comentario, pai eh o tweet original
+    private ObjectId paiId; // Quando eh um comentario, pai eh o tweet original
 
     private List<Tweet> comentarios;
 
@@ -57,7 +56,7 @@ public class Tweet {
         this.mensagem = mensagem;
         this.imagens = imagens;
         this.pseudonimo = pseudonimo;
-        this.pai = pai;
+        this.paiId = pai.getId();
         this.liked = new HashSet<>();
         this.comentarios = new LinkedList<>();
     }
