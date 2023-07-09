@@ -9,17 +9,23 @@ import { useCookies } from "react-cookie";
 
 interface HeaderProps {
     data: any;
-    openModal?: () => void;
+    openModal?: (tweetbase: any) => void;
     closeModal?: () => void;
     modalOpen?: boolean;
+    onClick?: () => void;
 }
 
 
 
-const Header: React.FC<HeaderProps> = ({ data, openModal, closeModal, modalOpen }) => {
+const Header: React.FC<HeaderProps> = ({ data, openModal, closeModal, modalOpen, onClick }) => {
     const [liked, setLiked] = useState(false);
     const [cookies] = useCookies(["userId"]);
     const length = data.liked.length;
+
+    const handleComment = () => {
+        if (openModal)
+            openModal(data);
+    }
 
     const handleLike = () => {
         const requestOptions = {
@@ -55,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({ data, openModal, closeModal, modalOpen 
             </div>
             <div className="p-2 flex items-center">
                 <button className="p-1">
-                    <TfiComments size={20} color="white" onClick={openModal}/>
+                    <TfiComments size={20} color="white" onClick={handleComment} />
                 </button>
                 <div className="flex items-center">
                     <button onClick={handleLike}> {
