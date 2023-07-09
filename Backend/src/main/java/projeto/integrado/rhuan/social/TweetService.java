@@ -43,7 +43,7 @@ public class TweetService {
         Tweet novo = new Tweet(user, mensagem, pseudonimo, imagens, tweetRepository.findById(pai).get());
         tweetRepository.insert(novo);
 
-        //Colocar na lista de comentarios do pai
+        // Colocar na lista de comentarios do pai
         mongoTemplate.update(Tweet.class)
                 .matching(Criteria.where("_id").is(pai))
                 .apply(new Update().push("comentarios").value(novo))

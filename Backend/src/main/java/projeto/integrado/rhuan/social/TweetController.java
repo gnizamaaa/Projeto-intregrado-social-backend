@@ -35,7 +35,7 @@ public class TweetController {
 
         //Mostrando apenas os que n sao comentarios
         for (Tweet i : temp) {
-            if (i.getPaiId() == null) {
+            if (i.getPaiId()==null) {
                 saida.add(i);
             }
         }
