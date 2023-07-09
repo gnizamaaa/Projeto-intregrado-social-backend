@@ -53,7 +53,7 @@ export default function Home() {
     };
   }, []);
 
-  const renderComments = (comments) => {
+  const renderComments = (comments: any[]) => {
     if (!comments) return null;
 
     return comments.slice().reverse().map((comment, j) => (
