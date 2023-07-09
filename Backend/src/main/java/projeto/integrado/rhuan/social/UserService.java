@@ -66,6 +66,13 @@ public class UserService {
                 .matching(Criteria.where("_id").is(id))
                 .apply(new Update().push("tweets").value(novoTweet))
                 .first();
+    }
+
+    public void insertNotifTweet(ObjectId id, Notificacao novaNotificacao) {
+        mongoTemplate.update(User.class)
+                .matching(Criteria.where("_id").is(id))
+                .apply(new Update().push("notif").value(novaNotificacao))
+                .first();
 
     }
 }

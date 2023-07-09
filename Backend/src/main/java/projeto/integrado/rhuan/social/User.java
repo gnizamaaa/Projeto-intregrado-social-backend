@@ -43,6 +43,9 @@ public class User {
     @DocumentReference
     private List<Tweet> tweets;
 
+    @DocumentReference
+    private List<Notificacao> notif;
+
     public User(String nome, Date birthday, String bio, String passPhrase, String email) {
         // this.link = link;
         this.id = new ObjectId();
@@ -53,6 +56,7 @@ public class User {
         this.email = email;
         this.follow = new LinkedList<>();
         this.tweets = new LinkedList<>();
+        this.notif = new LinkedList<>();
 
     }
 
