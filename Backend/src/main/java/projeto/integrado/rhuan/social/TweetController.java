@@ -1,6 +1,7 @@
 package projeto.integrado.rhuan.social;
 
 import java.text.ParseException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,7 +30,17 @@ public class TweetController {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
         teste.set("Access-Control-Allow-Origin", "*");
 
-        return ResponseEntity.ok().headers(teste).body(tweetService.AllTweets());
+        List<Tweet> temp = tweetService.AllTweets();
+        List<Tweet> saida = new LinkedList<Tweet>();
+
+        //Mostrando apenas os que n sao comentarios
+        for (Tweet i : temp) {
+            if (i.getPaiId()==null) {
+                saida.add(i);
+            }
+        }
+
+        return ResponseEntity.ok().headers(teste).body(saida);
     }
 
     @GetMapping("/{id}")
@@ -60,6 +71,20 @@ public class TweetController {
 
         }
 
+    }
+
+    @CrossOrigin
+    @PostMapping("/comentario")
+    public ResponseEntity<String> CommentTweetReq(@RequestBody Map<String, String> payload) throws ParseException {
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        try {
+            tweetService.createComment(payload.get("user"), payload.get("mensagem"), payload.get("pseudonimo"), null,
+                    new ObjectId(payload.get("paiId")));
+            return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body("{}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).headers(headers).body(e.toString());
+
+        }
     }
 
     @Autowired

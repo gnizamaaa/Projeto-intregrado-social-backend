@@ -4,14 +4,16 @@ import { AiOutlineClose } from "react-icons/ai";
 import { BiArrowBack } from "react-icons/bi";
 import { FaBroom } from "react-icons/fa";
 import TextareaAutosize from 'react-textarea-autosize';
+import Tweet from "./Tweet";
 
 
 interface TweetModalProps {
     isOpen: boolean;
     onClose: () => void;
+    tweetpai?: any;
 }
 
-const TweetModal: React.FC<TweetModalProps> = ({ isOpen, onClose }) => {
+const TweetModal: React.FC<TweetModalProps> = ({ isOpen, onClose, tweetpai }) => {
     // Login
     const [cookies] = useCookies(["userId"]);
     const [username] = useCookies(["username"]);
@@ -23,29 +25,56 @@ const TweetModal: React.FC<TweetModalProps> = ({ isOpen, onClose }) => {
     const [imagens, setImagem] = useState(" ");
 
     const handleSubmit = () => {
-        const requestOptions = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify({
-                pseudonimo: pseudonimo,
-                user: cookies.userId,
-                mensagem: mensagem
-            }),
-        };
+        if (!tweetpai) {
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify({
+                    pseudonimo: pseudonimo,
+                    user: cookies.userId,
+                    mensagem: mensagem
+                }),
+            };
 
-        fetch("http://localhost:8080/api/v1/tweets", requestOptions)
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
+            fetch("http://localhost:8080/api/v1/tweets", requestOptions)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
 
-        onClose();
+            onClose();
+        } else {
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify({
+                    pseudonimo: pseudonimo,
+                    user: cookies.userId,
+                    mensagem: mensagem, 
+                    paiId: tweetpai.id
+                }),
+            };
+
+            fetch("http://localhost:8080/api/v1/tweets/comentario", requestOptions)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+
+            onClose();
+        }
     }
 
     const handleBack = () => {
@@ -64,7 +93,10 @@ const TweetModal: React.FC<TweetModalProps> = ({ isOpen, onClose }) => {
                     <button className="right-90" onClick={handleBack}>
                         <BiArrowBack></BiArrowBack>
                     </button>
-
+                    {tweetpai && (<div className="p-2 ">
+                        <p className="">Respondendo a:</p>
+                        <Tweet data={tweetpai} />
+                    </div>)}
                     <TextareaAutosize
                         minRows={8}
                         value={mensagem}
