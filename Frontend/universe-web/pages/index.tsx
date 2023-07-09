@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Header from '@/components/Header'
 import { useEffect, useState } from 'react'
 import Tweet from '@/components/Tweet'
+import TweetModal from '@/components/TweetModal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,8 +19,20 @@ export default function Home() {
       .catch((err) => {
         console.log(err.message);
       });
-      console.log("Sucesso pegando os tweets");
+    console.log("Sucesso pegando os tweets");
   }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
 
   useEffect(() => {
     getTweets();
@@ -46,7 +59,8 @@ export default function Home() {
           {/* <td>{item.userId}</td>
           <td>{item.mensagem}</td>
           <td>{item.releaseDate}</td> */}
-          <Tweet data={item} />
+          <Tweet data={item} openModal={openModal} closeModal={closeModal} modalOpen={isModalOpen}  />
+          <TweetModal isOpen={isModalOpen} onClose={closeModal} tweetpai={item} />
         </div>
       ))}
 

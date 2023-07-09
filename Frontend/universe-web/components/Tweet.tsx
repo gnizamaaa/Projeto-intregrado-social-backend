@@ -5,12 +5,18 @@ import dayjs from "dayjs"
 import { TfiComments } from "react-icons/tfi";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { useCookies } from "react-cookie";
+//import TweetModal from "./TweetModal"; //Dependencia circular, n da
 
 interface HeaderProps {
     data: any;
+    openModal?: () => void;
+    closeModal?: () => void;
+    modalOpen?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ data }) => {
+
+
+const Header: React.FC<HeaderProps> = ({ data, openModal, closeModal, modalOpen }) => {
     const [liked, setLiked] = useState(false);
     const [cookies] = useCookies(["userId"]);
     const length = data.liked.length;
@@ -49,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
             </div>
             <div className="p-2 flex items-center">
                 <button className="p-1">
-                    <TfiComments size={20} color="white" />
+                    <TfiComments size={20} color="white" onClick={openModal}/>
                 </button>
                 <div className="flex items-center">
                     <button onClick={handleLike}> {
@@ -64,7 +70,6 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
                     } </button>
                     <p className="ml-1 text-sm">{length}</p>
                 </div>
-
             </div>
         </div>
     );
