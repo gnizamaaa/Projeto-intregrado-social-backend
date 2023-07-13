@@ -6,10 +6,18 @@ import { useRouter } from 'next/router';
 
 const inter = Inter({ subsets: ['latin'] });
 
+interface UserClass {
+    nome: string;
+    bio: string;
+    follow: any[];
+    tweets: any[];
+}
+  
+
 export default function Home() {
     const router = useRouter();
     const [posts, setPosts] = useState([]);
-    const [userClass, setUserClass] = useState(null);
+    const [userClass, setUserClass] = useState<UserClass>();
     const { user } = router.query;
 
     useEffect(() => {

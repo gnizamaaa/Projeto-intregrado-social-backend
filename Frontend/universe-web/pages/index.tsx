@@ -7,8 +7,12 @@ import TweetModal from '@/components/TweetModal';
 
 const inter = Inter({ subsets: ['latin'] });
 
+interface Post {
+  comentarios: any[]; // Update this to the actual type of 'comentarios'
+}
+
 export default function Home() {
-  const [posts, setPosts] = useState<>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [comentando, setComentando] = useState();
 
