@@ -60,5 +60,11 @@ RUN ./mvnw clean package
 EXPOSE 8080
 EXPOSE 3000
 
-# Start the backend server and frontend
-CMD sh -c "java -jar /app/Backend/target/social-0.0.1-SNAPSHOT.jar & npm run --prefix /app/Frontend start"
+# Copy the entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+
+# Make the entrypoint script executable
+RUN chmod +x /entrypoint.sh
+
+# Set the entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
