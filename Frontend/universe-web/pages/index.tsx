@@ -8,7 +8,7 @@ import TweetModal from '@/components/TweetModal';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [comentando, setComentando] = useState();
 
