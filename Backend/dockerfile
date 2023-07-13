@@ -1,0 +1,20 @@
+# Use a imagem base com suporte ao Java
+FROM openjdk:17-jdk-slim
+
+# Defina o diretório de trabalho
+WORKDIR /app
+
+# # Define a variável de ambiente JAVA_HOME
+# ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk
+
+# Copie o código-fonte do back-end para o contêiner
+COPY . /app
+
+# Compile o back-end\
+RUN ./mvnw clean package
+
+# Exponha a porta em que o back-end está escutando
+EXPOSE 8080
+
+# Defina o comando de inicialização do back-end
+CMD ["java", "-jar", "target/social-0.0.1-SNAPSHOT.jar"]
