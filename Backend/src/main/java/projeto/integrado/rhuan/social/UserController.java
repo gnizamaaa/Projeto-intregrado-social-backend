@@ -70,11 +70,11 @@ public class UserController {
     public ResponseEntity<String> postUser(@RequestBody Map<String, String> payload) throws ParseException {
         Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(payload.get("birthday"));
 
-        // Create the response headers and set the necessary CORS headers
+        // Cria os headers da resposta e define os cabeçalhos CORS necessários
         org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
         // headers.set("Access-Control-Allow-Origin", "*");
 
-        // Modify the response creation to include the headers and response body
+        // Modifica a criação da resposta para incluir os headers e o corpo da resposta
         if (!userService.isUserExist(payload.get("nome"))) {
             Optional<User> temp = userService.createUser(payload.get("nome"), date1, payload.get("bio"),
                     payload.get("pass"), payload.get("email"));

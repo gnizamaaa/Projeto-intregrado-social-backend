@@ -25,6 +25,7 @@ public class TweetController {
     @Autowired
     private TweetService tweetService;
 
+    // Obtém todos os tweets que não são comentários
     @GetMapping
     public ResponseEntity<List<Tweet>> getallTweets() {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
@@ -33,9 +34,9 @@ public class TweetController {
         List<Tweet> temp = tweetService.AllTweets();
         List<Tweet> saida = new LinkedList<Tweet>();
 
-        //Mostrando apenas os que n sao comentarios
+        // Filtrar apenas os tweets que não são comentários
         for (Tweet i : temp) {
-            if (i.getPaiId()==null) {
+            if (i.getPaiId() == null) {
                 saida.add(i);
             }
         }
@@ -43,6 +44,7 @@ public class TweetController {
         return ResponseEntity.ok().headers(teste).body(saida);
     }
 
+    // Obtém um tweet específico pelo ID
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Tweet>> getEspecifcTweet(@PathVariable ObjectId id) {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
@@ -51,6 +53,7 @@ public class TweetController {
         return ResponseEntity.ok().headers(teste).body(tweetService.singleTweet(id));
     }
 
+    // Obtém todos os tweets de um usuário pelo ID do usuário
     @GetMapping("/user/{id}")
     public ResponseEntity<Optional<List<Tweet>>> getUserIdTweets(@PathVariable String id) {
         org.springframework.http.HttpHeaders teste = new org.springframework.http.HttpHeaders();
@@ -59,6 +62,7 @@ public class TweetController {
         return ResponseEntity.ok().headers(teste).body(tweetService.userIdTweets(id));
     }
 
+    // Permite que um usuário curta um tweet
     @CrossOrigin
     @PostMapping("/liked")
     public ResponseEntity<String> likeTweetReq(@RequestBody Map<String, String> payload) throws ParseException {
@@ -73,6 +77,7 @@ public class TweetController {
 
     }
 
+    // Permite que um usuário comente em um tweet
     @CrossOrigin
     @PostMapping("/comentario")
     public ResponseEntity<String> CommentTweetReq(@RequestBody Map<String, String> payload) throws ParseException {
@@ -90,6 +95,7 @@ public class TweetController {
     @Autowired
     private UserService userService;
 
+    // Publica um novo tweet
     @CrossOrigin
     @PostMapping
     public ResponseEntity<String> postTweet(@RequestBody Map<String, String> payload) throws ParseException {
@@ -97,7 +103,7 @@ public class TweetController {
         // teste.set("Access-Control-Allow-Origin", "*");
 
         /// String[] imagens = payload.get("imagens").split(" ");
-        String[] imagens = null;
+        String[] imagens = null; // Imagens ainda nao foram implementadas, logo as defino como nulo
         Tweet novoTweet = tweetService.createTweet(payload.get("user"), payload.get("mensagem"),
                 payload.get("pseudonimo"), imagens);
 
