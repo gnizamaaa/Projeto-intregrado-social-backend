@@ -61,6 +61,4 @@ EXPOSE 8080
 EXPOSE 3000
 
 # Start the backend server and frontend
-CMD java -jar /app/Backend/target/social-0.0.1-SNAPSHOT.jar & \
-    cd /app/Frontend/ && \
-    npm run start
+CMD sh -c "java -jar /app/Backend/target/social-0.0.1-SNAPSHOT.jar & npm run --prefix /app/Frontend start"
