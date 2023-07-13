@@ -4,13 +4,37 @@ FROM openjdk:17-jdk-slim
 # Defina o diretório de trabalho
 WORKDIR /app
 
-# # Define a variável de ambiente JAVA_HOME
-# ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk
-
 # Copie o código-fonte do back-end para o contêiner
 COPY . /app
 
-# Compile o back-end\
+# Obtenha os argumentos de build passados durante o comando de build
+ARG DATABASE
+ARG USER
+ARG PASSWORD
+ARG CLUSTER
+
+# Para que os argumentos de build sejam acessíveis durante o comando de build,
+# siga o formato do comando de build abaixo:
+# docker build --build-arg DATABASE=<DATABASE> \
+#              --build-arg USER=<USER> \
+#              --build-arg PASSWORD=<PASSWORD> \
+#              --build-arg CLUSTER=<CLUSTER> \
+#              -t meu-container .
+
+
+# Defina as variáveis de ambiente com os argumentos de build
+ENV MONGO_DATABASE=$DATABASE
+ENV MONGO_USER=$USER
+ENV MONGO_PASSWORD=$PASSWORD
+ENV MONGO_CLUSTER=$CLUSTER
+
+# Crie um script para gerar o arquivo .env
+RUN echo "MONGO_DATABASE=\"$MONGO_DATABASE\"" > /app/src/main/resources/.env \
+    && echo "MONGO_USER=\"$MONGO_USER\"" >> /app/src/main/resources/.env \
+    && echo "MONGO_PASSWORD=\"$MONGO_PASSWORD\"" >> /app/src/main/resources/.env \
+    && echo "MONGO_CLUSTER=\"$MONGO_CLUSTER\"" >> /app/src/main/resources/.env
+
+# Compile o back-end
 RUN ./mvnw clean package
 
 # Exponha a porta em que o back-end está escutando
