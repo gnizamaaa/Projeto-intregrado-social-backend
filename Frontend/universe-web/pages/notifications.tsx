@@ -14,7 +14,7 @@ export default function Home() {
     const [notif, setNotif] = useState([]);
     const [cookies] = useCookies(["userId"]);
 
-
+    // Função para obter as notificações
     const getNotifs = () => {
         fetch('http://localhost:8080/api/v1/users/notif/' + cookies.userId)
             .then((response) => response.json())

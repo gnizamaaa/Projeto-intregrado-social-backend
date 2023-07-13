@@ -13,6 +13,7 @@ interface TweetModalProps {
     tweetpai?: any;
 }
 
+// Componente de modal para compor um tweet
 const TweetModal: React.FC<TweetModalProps> = ({ isOpen, onClose, tweetpai }) => {
     // Login
     const [cookies] = useCookies(["userId"]);

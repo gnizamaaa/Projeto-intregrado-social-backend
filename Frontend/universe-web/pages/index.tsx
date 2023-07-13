@@ -8,7 +8,7 @@ import TweetModal from '@/components/TweetModal';
 const inter = Inter({ subsets: ['latin'] });
 
 interface Post {
-  comentarios: any[]; // Update this to the actual type of 'comentarios'
+  comentarios: any[];
 }
 
 export default function Home() {
@@ -30,11 +30,11 @@ export default function Home() {
     console.log('Sucesso pegando os tweets');
   };
 
+  // Funções para abrir e fechar o modal para compor tweet
   const openModal = (tweetbase: any) => {
     setIsModalOpen(true);
     setComentando(tweetbase);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -42,6 +42,7 @@ export default function Home() {
   useEffect(() => {
     getTweets();
 
+    // Intervalo para atualizar os tweets
     const interval = setInterval(() => {
       if (
         window.scrollY <= 0 ||
@@ -57,6 +58,7 @@ export default function Home() {
     };
   }, []);
 
+  // Função para renderizar os comentários
   const renderComments = (comments: any[]) => {
     if (!comments) return null;
 

@@ -12,27 +12,27 @@ const SidebarTweet = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-
+    // Funções para abrir e fechar o modal de publicação de tweet
     const openModal = () => {
         setIsModalOpen(true);
     };
-
     const closeModal = () => {
         setIsModalOpen(false);
     };
 
+    // Funções para abrir e fechar o modal de login
     const openLoginModal = () => {
         setIsLoginModalOpen(true);
     };
-
     const closeLoginModal = () => {
         setIsLoginModalOpen(false);
     };
 
+    // Função para lidar com o clique no botão de publicar tweet
     const handleTweet = () => {
-        if(!(cookies.userId === 'undefined')){
+        if (!(cookies.userId === 'undefined')) {
             openModal();
-        }else openLoginModal();
+        } else openLoginModal();
     };
 
 
