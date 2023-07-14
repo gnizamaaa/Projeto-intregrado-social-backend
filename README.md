@@ -190,6 +190,29 @@ Vejo essa versão como uma demonstração básica do UniVerse, mas o projeto pos
 
 Essas são apenas algumas áreas em que o UniVerse pode evoluir no futuro. Com mais tempo e recursos, é possível alcançar a visão inicial do projeto de criar uma rede social administrada pela universidade, com alunos verificados, que podem postar anonimamente ou identificados, promovendo um ambiente de interação e compartilhamento de informações entre estudantes.
 
+## Documentação da API
+
+O UniVerse oferece uma página de documentação Swagger que descreve detalhadamente a API subjacente do projeto. Essa documentação é uma excelente fonte de referência para desenvolvedores que desejam entender e interagir com a API do UniVerse.
+
+Através da página Swagger, você pode explorar os endpoints disponíveis, seus parâmetros, respostas e exemplos de uso. A documentação também fornece informações sobre autenticação, tipos de dados e possíveis erros que podem ser encontrados ao utilizar a API.
+
+Para acessar a documentação da API do UniVerse, siga os passos abaixo:
+
+1. Certifique-se de que o UniVerse esteja em execução e que você tenha acesso ao servidor local ou ao servidor remoto onde o projeto está sendo hospedado.
+
+2. Abra um navegador da web e digite o seguinte endereço:
+
+http://localhost:8080/swagger-ui.html
+
+Se você estiver acessando remotamente, substitua `localhost` pelo endereço do servidor onde o UniVerse está sendo executado.
+
+3. Você será direcionado para a página Swagger, que exibirá uma lista completa dos endpoints da API e suas descrições. Você pode navegar pelos endpoints, visualizar os detalhes de cada um deles e até mesmo fazer solicitações de teste diretamente pela página Swagger.
+
+A documentação Swagger é uma ferramenta valiosa para explorar e entender a API do UniVerse. Ela fornece uma visão geral completa da funcionalidade e permite que os desenvolvedores integrem facilmente o UniVerse a outras aplicações ou criem seus próprios clientes personalizados.
+
+Certifique-se de consultar a documentação da API para obter mais detalhes sobre os endpoints e recursos disponíveis.
+
+
 
 ## Licença
 
