@@ -7,7 +7,6 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-// import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -26,7 +25,6 @@ public class User {
     @JsonSerialize(using = ObjectIdToStringSerializer.class)
     private ObjectId id;
 
-    // private String link;
     private String nome;
     private Date birthday;
     private String bio;
@@ -47,7 +45,6 @@ public class User {
     private List<Notificacao> notif;
 
     public User(String nome, Date birthday, String bio, String passPhrase, String email) {
-        // this.link = link;
         this.id = new ObjectId();
         this.nome = nome;
         this.birthday = birthday;

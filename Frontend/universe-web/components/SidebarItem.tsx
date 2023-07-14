@@ -9,6 +9,7 @@ interface SidebarItemProps {
     onclick?: () => void;
 }
 
+// Componente para exibir um item na barra lateral com um ícone e um rótulo
 const SidebarItem: React.FC<SidebarItemProps> = ({
     label,
     href,
@@ -18,6 +19,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 
     const router = useRouter();
 
+    // Função para lidar com o clique no item da barra lateral
     const handleClick = useCallback(() => {
         if (onclick) {
             return onclick();

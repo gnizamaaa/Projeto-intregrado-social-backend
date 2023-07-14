@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 
 
+// Componente de atalhos da sidebar
 const Sidebar = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);

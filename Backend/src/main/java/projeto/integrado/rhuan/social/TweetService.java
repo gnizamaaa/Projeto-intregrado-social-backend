@@ -24,9 +24,6 @@ public class TweetService {
         return tweetRepository.findById(id);
     }
 
-    // Provavelmente nao sera usado normalmente, ja que user tera referencia para os
-    // tweets mas pode vir a calhar em algum momento, estou aprendendo a implementar
-    // entao achei util p aprender a buscar com outro campo e afins
     public Optional<List<Tweet>> userIdTweets(String id) {
         return tweetRepository.findTweetByUserId(id);
     }
@@ -49,7 +46,7 @@ public class TweetService {
         Tweet novo = new Tweet(user, mensagem, pseudonimo, imagens, tweetRepository.findById(pai).get());
         tweetRepository.insert(novo);
 
-        // Colocar na lista de comentarios do pai
+        // Adiciona o comentário à lista de comentários do tweet pai
         mongoTemplate.update(Tweet.class)
                 .matching(Criteria.where("_id").is(pai))
                 .apply(new Update().push("comentarios").value(novo))
@@ -70,6 +67,7 @@ public class TweetService {
     public void likeTweet(ObjectId userId, ObjectId likedTweetId) {
         Optional<Tweet> gostado = tweetRepository.findById(likedTweetId);
         if (!gostado.get().getLiked().contains(userId)) {
+            // Adiciona o usuário à lista de curtidas do tweet
             mongoTemplate.update(Tweet.class)
                     .matching(Criteria.where("_id").is(likedTweetId))
                     .apply(new Update().push("liked").value(userId))

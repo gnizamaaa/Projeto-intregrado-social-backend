@@ -16,10 +16,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    // Retorna uma lista de todos os usuários
     public List<User> AllUsers() {
         return userRepository.findAll();
     }
 
+    // Cria um novo usuário com os detalhes fornecidos
     public Optional<User> createUser(String nome, Date birthday, String bio, String passPhrase, String email) {
 
         if (!userRepository.findUserByNome(nome).isPresent()) {
@@ -29,8 +31,8 @@ public class UserService {
             return null;
     }
 
-    // Retorna o ID do User, vai ser oq vai ser usado para tudo, desde post a
-    // modificar o usuario dada a aleatoriedade da chave
+    // Realiza o login do usuário com o nome e senha fornecidos
+    // Retorna o ID do usuário se a autenticação for bem-sucedida
     public Optional<String> LoginUser(String nome, String pass) {
         Optional<User> candidato = userRepository.findUserByNome(nome);
         if (candidato.get().getPassPhrase().compareTo(pass) == 0) {
@@ -39,21 +41,25 @@ public class UserService {
             return null;
     }
 
+    // Obtém o nome de usuário pelo ID fornecido
     public Optional<String> getUsernamebyID(String ID) {
         Optional<User> candidato = userRepository.findById(new ObjectId(ID));
         return Optional.of(candidato.get().getNome());
     }
 
+    // Obtém as notificações pelo ID do usuário
     public Optional<List<Notificacao>> getNotificationsByID(String ID) {
         Optional<User> candidato = userRepository.findById(new ObjectId(ID));
         return Optional.of(candidato.get().getNotif());
     }
 
+    // Obtém o usuário pelo nome de usuário fornecido
     public Optional<User> getUserbyUsername(String name) {
         Optional<User> candidato = userRepository.findUserByNome(name);
         return Optional.of(candidato.get());
     }
 
+    // Verifica se o usuário com o nome fornecido existe
     public Boolean isUserExist(String nome) {
         Optional<User> candidato = userRepository.findUserByNome(nome);
         if (candidato.isPresent()) {
@@ -65,7 +71,7 @@ public class UserService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    // Inserir o tweet novo no usuario
+    // Insere um novo tweet no usuário com o ID fornecido
     public void insertUserTweet(ObjectId id, Tweet novoTweet) {
         mongoTemplate.update(User.class)
                 .matching(Criteria.where("_id").is(id))
@@ -73,6 +79,7 @@ public class UserService {
                 .first();
     }
 
+    // Insere uma nova notificação de tweet no usuário com o ID fornecido
     public void insertNotifTweet(ObjectId id, Notificacao novaNotificacao) {
         mongoTemplate.update(User.class)
                 .matching(Criteria.where("_id").is(id))

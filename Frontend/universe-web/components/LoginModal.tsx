@@ -7,6 +7,7 @@ interface LoginModalProps {
   onClose: () => void;
 }
 
+// Componente de modal de login
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   // Login
   const [user, setUser] = useState("");
@@ -20,10 +21,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
 
+  // Função para lidar com o envio do formulario de login
   const handleSubmit = () => {
-    // console.log(user);
-    // console.log(password);
-
     fetch("http://localhost:8080/api/v1/users/" + user + "/" + password)
       .then((response) => response.json())
       .then((data) => {
@@ -36,10 +35,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
     if (cookies.userId != null) {
       setUsername("username", user);
-      onClose(); // Close the modal after successful login
+      onClose(); // Fechar o modal apos o login bem-sucedido
     }
   };
 
+  // Função para lidar com o envio do formulário de cadastro
   const handleCadastro = () => {
     const requestOptions = {
       method: "POST",

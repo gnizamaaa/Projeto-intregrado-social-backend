@@ -1,11 +1,12 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 
-
 interface LayoutProps {
     children: React.ReactNode;
 }
-const Layout : React.FC<LayoutProps> = ({ children }) => {
+
+// Componente de layout que define uma estrutura básica de página com uma barra lateral e área de conteúdo
+const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
         <div className="h-screen bg-black">
             <div className="container h-full mx-auto xl:px-30 max-w-6xl">

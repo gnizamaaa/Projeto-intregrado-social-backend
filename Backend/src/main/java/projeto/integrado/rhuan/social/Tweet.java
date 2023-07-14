@@ -26,21 +26,18 @@ public class Tweet {
     @JsonSerialize(using = ObjectIdToStringSerializer.class)
     private ObjectId id;
 
-    private String userId;
+    private String userId; // ID do usuário que fez o tweet
+    private String pseudonimo; // Pseudônimo do usuário
+    private String releaseDate; // Data de lançamento do tweet
+    private String mensagem; // Conteúdo do tweet
+    private String[] imagens; // Imagens anexadas ao tweet
 
-    private String pseudonimo;
-
-    private String releaseDate;
-    private String mensagem;
-    private String[] imagens;
-
-    //@DocumentReference
-    private Set<ObjectId> liked;
+    private Set<ObjectId> liked; // Conjunto de IDs dos usuários que curtiram o tweet
 
     private ObjectId paiId; // Quando eh um comentario, pai eh o tweet original
 
     @DocumentReference
-    private List<Tweet> comentarios;
+    private List<Tweet> comentarios; // Lista de tweets que são comentários deste tweet
 
     public Tweet(String userId, String mensagem, String pseudonimo, String[] imagens) {
         this.releaseDate = (new Date().toString());

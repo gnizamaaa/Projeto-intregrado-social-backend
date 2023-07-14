@@ -7,11 +7,13 @@ interface HeaderProps {
     showBackArrow?: boolean;
 }
 
+// Uso:
 // Com BackArrow:
 // <Header showBackArrow label="Label"/>
 // Sem BackArrow:
 // <Header label="Label"/>
 
+// Componente de cabeçalho reutilizável para exibir um título e uma seta de voltar opcional
 const Header: React.FC<HeaderProps> = ({ label, showBackArrow }) => {
     const router = useRouter();
     const voltapag = useCallback(() => { router.back() }, [router]);

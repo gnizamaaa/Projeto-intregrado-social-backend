@@ -8,20 +8,17 @@ const SidebarLogout = () => {
     const [cookies, setCookie] = useCookies(["userId"]);
     const [, setUsername] = useCookies(["username"]);
 
-
-
+    // Efeito para verificar o estado do cookie e definir a visibilidade do botão de logout
     useEffect(() => {
-        // Checando o valor do cookie e setando a visibilidade do botao
-        // para falsa quando o cookie nao esta definido e verdadeira
-        // para quando possui um valor valido
         const cookieValue = cookies.userId;
-        if (!cookieValue||cookieValue === 'undefined') {
+        if (!cookieValue || cookieValue === 'undefined') {
             setShowButton(false);
         } else
             setShowButton(true);
 
     }, [cookies.userId]);
 
+    // Função para lidar com o logout
     const handleLogout = () => {
         setCookie("userId", undefined);
         setUsername('username', undefined);
